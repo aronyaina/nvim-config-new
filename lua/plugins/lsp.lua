@@ -82,8 +82,13 @@ return {
           -- JSON Schema Store integration
           ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
           ["https://json.schemastore.org/kustomization.json"] = "kustomization.yaml",
+          ['https://raw.githubusercontent.com/docker/compose/master/compose/config/compose_spec.json'] = 'docker-compose*.{yml,yaml}',
+             -- Schéma ArgoCD Applications
+          ["https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/application-crd.yaml"] = "argocd/*.yaml",
+
+          -- Kubernetes CRDs pour ArgoCD
+          ["https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/applicationset-crd.yaml"] = "argocd/*.yaml",
         },
-        validate = true, -- Enable validation
         format = { enable = true }, -- Enable formatting
         hover = true, -- Enable hover
         completion = true, -- Enable completion
