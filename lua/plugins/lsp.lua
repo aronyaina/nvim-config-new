@@ -90,7 +90,6 @@ return {
           ["https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/applicationset-crd.yaml"] = "argocd/*.yaml",
         },
         format = { enable = true }, -- Enable formatting
-        hover = true, -- Enable hover
         completion = true, -- Enable completion
           }
       }
