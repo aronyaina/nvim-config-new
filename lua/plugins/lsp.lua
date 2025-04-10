@@ -56,7 +56,16 @@ return {
         require("cmp_nvim_lsp").default_capabilities())
 
       local servers = {
-        gopls = {},
+        gopls = {
+          settings = {
+            gopls = {
+              usePlaceholders = true,
+              completeUnimported = true,
+              hoverKind = "DefinitionDocumentation",
+              staticcheck = true,
+            },
+          },
+        },
       }
 
       require("mason").setup()
@@ -71,27 +80,32 @@ return {
       })
       require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
+       require('lspconfig')['gopls'].setup({
+        on_attach = on_attach,
+        capabilities = capabilities,
+      })
+
       require('lspconfig')['yamlls'].setup {
       on_attach = on_attach,
       capabilities = capabilities,
       settings = {
         yaml = {
-        schemas = {
-          -- Kubernetes schemas
-          kubernetes = "*.yaml",
-          -- JSON Schema Store integration
-          ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
-          ["https://json.schemastore.org/kustomization.json"] = "kustomization.yaml",
-          ['https://raw.githubusercontent.com/docker/compose/master/compose/config/compose_spec.json'] = 'docker-compose*.{yml,yaml}',
-             -- Schéma ArgoCD Applications
-          ["https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/application-crd.yaml"] = "argocd/*.yaml",
+          schemas = {
+            -- Kubernetes schemas
+            kubernetes = "*.yaml",
+            -- JSON Schema Store integration
+            ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+            ["https://json.schemastore.org/kustomization.json"] = "kustomization.yaml",
+            ['https://raw.githubusercontent.com/docker/compose/master/compose/config/compose_spec.json'] = 'docker-compose*.{yml,yaml}',
+               -- Schéma ArgoCD Applications
+            ["https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/application-crd.yaml"] = "argocd/*.yaml",
 
-          -- Kubernetes CRDs pour ArgoCD
-          ["https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/applicationset-crd.yaml"] = "argocd/*.yaml",
-        },
-        format = { enable = true }, -- Enable formatting
-        completion = true, -- Enable completion
-          }
+            -- Kubernetes CRDs pour ArgoCD
+            ["https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/applicationset-crd.yaml"] = "argocd/*.yaml",
+          },
+          format = { enable = true }, -- Enable formatting
+          completion = true, -- Enable completion
+        }
       }
     }
       local lspconfig=require("lspconfig")
